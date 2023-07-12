@@ -23,4 +23,4 @@ Explanation:</strong>
 The spiral order of matrix will look like 1-&gt;2-&gt;3-&gt;6-&gt;9-&gt;8-&gt;7-&gt;4-&gt;5. So the 4th element in this order is 6.</span></pre>
 <p><span style="font-size: 18px;"><strong>Your Task:</strong><br>You only need to implement the given function&nbsp;<strong>findK()</strong>. Do not read input, instead use the arguments given in the function. Return the K'th element obtained by traversing matrix spirally.</span></p>
 <p><span style="font-size: 18px;"><strong>Expected Time Complexity:</strong> O(n*m)<br><strong>Expected Auxiliary Space:</strong> O(n*m)</span></p>
-<p><span style="font-size: 18px;"><strong>Constraints:</strong><br>1&lt;=n,m&lt;=10<sup>3</sup><br>1&lt;=k&lt;=n*m</span></p></div>
+<p><span style="font-size: 18px;"><strong>Constraints:</strong><br>1&lt;=n,m&lt;=10<sup>3</sup><br>1&lt;=k&lt;=n*m<br>-10<sup>9</sup> &lt;= A[i][j] &lt;= 10<sup>9</sup></span></p></div>
