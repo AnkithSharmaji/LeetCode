@@ -34,30 +34,31 @@ class GFG
 class Solution {
     public int findMotherVertex(int V, ArrayList<ArrayList<Integer>> adj) {
         boolean[] visited = new boolean[V];
-        int lastFinishedVertex = 0; // Initialize with the first vertex
-
-        // Perform a Depth-First Search starting from each vertex
+        int lastVisitedVertex = 0; // Initialize with the first vertex
+        
+        // Perform a Depth-First Search starting from an arbitrary vertex
+        dfs(0, adj, visited);
+        
+        // Find the last visited vertex during the DFS
         for (int i = 0; i < V; i++) {
             if (!visited[i]) {
+                lastVisitedVertex = i;
                 dfs(i, adj, visited);
-                lastFinishedVertex = i;
             }
         }
-
-        // Reset the visited array for another DFS
+        
+        // Check if the lastVisitedVertex is a mother vertex by doing DFS again
         Arrays.fill(visited, false);
-
-        // Check if the lastFinishedVertex is a mother vertex by doing DFS again
-        dfs(lastFinishedVertex, adj, visited);
-
-        // If all vertices are visited in the second DFS, the lastFinishedVertex is a mother vertex
+        dfs(lastVisitedVertex, adj, visited);
+        
+        // If all vertices are visited in the second DFS, the lastVisitedVertex is a mother vertex
         for (boolean visit : visited) {
             if (!visit) {
                 return -1; // There is no mother vertex
             }
         }
-
-        return lastFinishedVertex;
+        
+        return lastVisitedVertex;
     }
 
     private void dfs(int v, ArrayList<ArrayList<Integer>> adj, boolean[] visited) {
