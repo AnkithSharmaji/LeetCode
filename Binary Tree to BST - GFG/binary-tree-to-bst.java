@@ -109,20 +109,23 @@ class Solution {
         int index;
     }
 
-    // Helper function to perform in-order traversal and collect nodes
-    void inOrderTraversal(Node root, List<Node> nodes) {
+    // Helper function to perform in-order traversal and construct BST
+    Node binaryTreeToBSTUtil(Node root, Index index, List<Integer> inorderList) {
         if (root == null) {
-            return;
+            return null;
         }
 
-        // Traverse the left subtree
-        inOrderTraversal(root.left, nodes);
+        // Recursively convert left subtree
+        Node left = binaryTreeToBSTUtil(root.left, index, inorderList);
 
-        // Collect the current node
-        nodes.add(root);
+        // Replace the data of the current node with the next value from the sorted list
+        root.data = inorderList.get(index.index);
+        index.index++;
 
-        // Traverse the right subtree
-        inOrderTraversal(root.right, nodes);
+        // Recursively convert right subtree
+        Node right = binaryTreeToBSTUtil(root.right, index, inorderList);
+
+        return root;
     }
 
     // Function to convert the Binary Tree to a BST
@@ -131,30 +134,26 @@ class Solution {
             return null;
         }
 
-        // Collect the nodes in in-order traversal
-        List<Node> nodes = new ArrayList<>();
-        inOrderTraversal(root, nodes);
+        // Collect the nodes in in-order traversal and store them in a list
+        List<Integer> inorderList = new ArrayList<>();
+        Index index = new Index();
+        index.index = 0;
+        inOrderTraversal(root, inorderList);
 
-        // Sort the collected nodes by their values
-        Collections.sort(nodes, (a, b) -> Integer.compare(a.data, b.data));
+        // Sort the list to obtain the sorted order
+        Collections.sort(inorderList);
 
-        // Reconstruct the BST using the sorted nodes
-        return constructBST(nodes, 0, nodes.size() - 1);
+        // Reconstruct the BST using the sorted list
+        return binaryTreeToBSTUtil(root, index, inorderList);
     }
 
-    // Helper function to recursively construct the BST from sorted nodes
-    Node constructBST(List<Node> nodes, int start, int end) {
-        if (start > end) {
-            return null;
+    // Helper function for in-order traversal to collect nodes
+    void inOrderTraversal(Node root, List<Integer> inorderList) {
+        if (root == null) {
+            return;
         }
-
-        int mid = (start + end) / 2;
-        Node node = nodes.get(mid);
-
-        // Recursively build left and right subtrees
-        node.left = constructBST(nodes, start, mid - 1);
-        node.right = constructBST(nodes, mid + 1, end);
-
-        return node;
+        inOrderTraversal(root.left, inorderList);
+        inorderList.add(root.data);
+        inOrderTraversal(root.right, inorderList);
     }
 }
