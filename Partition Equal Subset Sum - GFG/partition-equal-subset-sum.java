@@ -43,27 +43,19 @@ class Solution {
         }
         
         int target = sum / 2;
-        boolean[][] dp = new boolean[N + 1][target + 1];
+        boolean[] dp = new boolean[target + 1];
         
-        // Initialize the first column to true, as we can achieve sum 0 with an empty subset
-        for (int i = 0; i <= N; i++) {
-            dp[i][0] = true;
-        }
+        // Initialize the first element to true, as we can achieve sum 0 with an empty subset
+        dp[0] = true;
         
-        // Fill the DP table
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= target; j++) {
-                // If the current element is greater than the target sum, we cannot include it
-                if (arr[i - 1] > j) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    // Either we include the current element or exclude it
-                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - arr[i - 1]];
-                }
+        // Fill the DP array
+        for (int num : arr) {
+            for (int j = target; j >= num; j--) {
+                dp[j] = dp[j] || dp[j - num];
             }
         }
         
-        // If dp[N][target] is true, it means there exists a partition
-        return dp[N][target] ? 1 : 0;
+        // If dp[target] is true, it means there exists a partition
+        return dp[target] ? 1 : 0;
     }
 }
