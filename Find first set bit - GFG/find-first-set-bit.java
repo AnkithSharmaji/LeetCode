@@ -32,15 +32,12 @@ class Solution
             return 0;
         }
         
-        // Initialize a position variable to track the bit position.
-        int position = 1;
+        // Find the rightmost set bit using n & -n.
+        int rightmostSetBit = n & -n;
         
-        // Use bitwise AND to find the first set bit.
-        while ((n & 1) == 0) {
-            n >>= 1; // Right shift to check the next bit.
-            position++;
-        }
+        // Count the number of trailing zeros to get the position.
+        int position = Integer.bitCount(rightmostSetBit - 1);
         
-        return position;
+        return position + 1; // Adding 1 to get the 1-based position.
     }
 }
