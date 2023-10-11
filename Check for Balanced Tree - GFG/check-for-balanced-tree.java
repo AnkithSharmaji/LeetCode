@@ -126,31 +126,28 @@ class Node {
 } */
 
 class Tree {
-    // Helper function to calculate the height of a tree.
-    int height(Node node) {
+    // Helper function to calculate the height of a tree and check balance.
+    int isBalancedHelper(Node node) {
         if (node == null)
             return 0;
-        return 1 + Math.max(height(node.left), height(node.right));
+
+        // Calculate the height of the left and right subtrees.
+        int leftHeight = isBalancedHelper(node.left);
+        int rightHeight = isBalancedHelper(node.right);
+
+        // Check if the difference in heights is not more than one and
+        // both left and right subtrees are balanced.
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1) {
+            return -1; // Not balanced
+        }
+
+        // Return the height of the current subtree.
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
     // Function to check whether a binary tree is balanced or not.
     boolean isBalanced(Node root) {
-        // Base case: An empty tree is balanced.
-        if (root == null)
-            return true;
-
-        // Calculate the height of the left and right subtrees.
-        int leftHeight = height(root.left);
-        int rightHeight = height(root.right);
-
-        // Check if the difference in heights is not more than one and
-        // both left and right subtrees are balanced.
-        if (Math.abs(leftHeight - rightHeight) <= 1 && isBalanced(root.left) && isBalanced(root.right)) {
-            return true;
-        }
-
-        // If any condition is not met, the tree is not balanced.
-        return false;
+        return isBalancedHelper(root) != -1;
     }
 }
 
